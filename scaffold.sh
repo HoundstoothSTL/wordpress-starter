@@ -95,6 +95,7 @@ echo -e "\n${IP} ${DOMAIN}" | sudo tee -a /etc/hosts >> /dev/null
 cp $THIS_DIR/vhost.conf $VHOSTS_DIR/vhost.conf && cd $VHOSTS_DIR && mv vhost.conf $PROJECTNAME.conf
 
 # Replace vhosts.conf template parts with project info
+$GSED -i "s/{{sitesdir}}/${SITES_DIR}/g" $PROJECTNAME.conf
 $GSED -i "s/{{projectname}}/${PROJECTNAME}/g" $PROJECTNAME.conf
 $GSED -i "s/{{user}}/${USER}/g" $PROJECTNAME.conf
 $GSED -i "s/{{email}}/${EMAIL}/g" $PROJECTNAME.conf
