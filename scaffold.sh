@@ -1,12 +1,13 @@
 #!/bin/bash
 # Author: Rob Bennet
 # Company: Houndstooth
-# Github: https://github.com/HoundstoothSTL 
+# Github: https://github.com/HoundstoothSTL
+# Repository: https://github.com/HoundstoothSTL/wp-starter.git
 # Description: Build out a WordPress environment for local development of a new project. 
 #              Optionally set up deployment with Capistrano and an Amazon S3 backup system to 
 #			   transfer to your remote machine.
 #
-# Version 0.1.0
+# Version 0.2.0
 
 # Fixes: Need to rework the generated salt piece for wp-config.php
 
@@ -57,6 +58,7 @@ TXTUND=$(tput sgr 0 1)
 TXTBLD=$(tput bold)
 TXTRST=$(tput sgr0)
 
+# Make sure a dev environment argument is passed with script
 if [ -z $1 ]; then
 	echo "No domain name given"
 	exit 1
@@ -67,13 +69,13 @@ DOMAIN=$1
 echo -e $CYAN"We will need sudo for the hosts file, get it out of the way..."$WHITE
 sudo -v
 
-# Keep-alive: update existing `sudo` time stamp until script has finished
+# Keep-alive: update existing sudo time stamp until script has finished
 while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
  
 # check the domain is valid!
 PATTERN="^(([a-zA-Z]|[a-zA-Z][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z]|[A-Za-z][A-Za-z0-9\-]*[A-Za-z0-9])$";
 if [[ "$DOMAIN" =~ $PATTERN ]]; then
-	DOMAIN=`echo $DOMAIN | tr '[A-Z]' '[a-z]'`
+	DOMAIN="$(echo $DOMAIN | tr '[A-Z]' '[a-z]')"
 	echo "Creating host for:" $DOMAIN
 else
 	echo "invalid domain name"
@@ -95,7 +97,7 @@ echo -e "\n${IP} ${DOMAIN}" | sudo tee -a /etc/hosts >> /dev/null
 cp $THIS_DIR/vhost.conf $VHOSTS_DIR/vhost.conf && cd $VHOSTS_DIR && mv vhost.conf $PROJECTNAME.conf
 
 # Replace vhosts.conf template parts with project info
-$GSED -i "s/{{sitesdir}}/${SITES_DIR}/g" $PROJECTNAME.conf
+$GSED -i "s!{{sitesdir}}!${SITES_DIR}!g" $PROJECTNAME.conf
 $GSED -i "s/{{projectname}}/${PROJECTNAME}/g" $PROJECTNAME.conf
 $GSED -i "s/{{user}}/${USER}/g" $PROJECTNAME.conf
 $GSED -i "s/{{email}}/${EMAIL}/g" $PROJECTNAME.conf
@@ -122,7 +124,7 @@ echo -e $CYAN"Database Created" $WHITE
 # Go to project directory
 cd $SITES_DIR
 
-# Pull down Topcoat WP starter
+# Pull down Topcoat WP starter scaffold
 echo -e $CYAN"Pulling down Topcoat WP starter..."$WHITE
 git clone git@github.com:HoundstoothSTL/topcoat.git
 
