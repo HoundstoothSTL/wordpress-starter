@@ -140,12 +140,12 @@ rm -rf .git
 # Go into themes directory
 cd site/wp-content/themes
 
-echo -e $CYAN"Pulling down WP Aldren theme..."$WHITE
+echo -e $CYAN"Pulling down WP Alderaan theme..."$WHITE
 # Clone Bolt starter theme
-git clone git@github.com:HoundstoothSTL/wp-aldren.git
+git clone git@github.com:HoundstoothSTL/wp-alderaan.git
 
 # Go into theme
-cd wp-aldren
+cd wp-alderaan
 
 # Get rid of .git database
 rm -rf .git
