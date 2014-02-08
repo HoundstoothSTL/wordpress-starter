@@ -32,8 +32,8 @@ APACHECTL="$(which apachectl)"
 ## User and Project Variables ##
 ################################
 VHOSTS_DIR="/Users/${USER}/vhosts"								#TODO
-SITES_DIR="/Users/${USER}/Dropbox/Houndstooth/Sites"			#TODO
-DEPLOY_DIR="/Users/${USER}/Dropbox/Houndstooth/code/deploy"		#TODO
+SITES_DIR="/Users/${USER}/Sites"								#TODO
+DEPLOY_DIR="/Users/${USER}/deploy"								#TODO
 EMAIL="rob@madebyhoundstooth.com"								#TODO
 GITHUB_USER="HoundstoothSTL"									#TODO
 
@@ -299,4 +299,3 @@ fi
 # Open Chrome and setup WordPress
 $OPEN -a "/Applications/Google Chrome.app" "http://${DOMAIN}/site/wp-admin"
 say process is finished
-say titee sprinkles
